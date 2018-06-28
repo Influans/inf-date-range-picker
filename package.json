@@ -48,5 +48,18 @@
     "ts-node": "~4.1.0",
     "tslint": "~5.9.1",
     "typescript": "~2.5.3"
-  }
+  },
+  "description": "it's a fork of [date-range-picker](https://github.com/DanielYKPan/date-range-picker)",
+  "directories": {
+    "lib": "lib"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Influans/inf-date-range-picker.git"
+  },
+  "author": "antoine zazzera",
+  "bugs": {
+    "url": "https://github.com/Influans/inf-date-range-picker/issues"
+  },
+  "homepage": "https://github.com/Influans/inf-date-range-picker#readme"
 }
