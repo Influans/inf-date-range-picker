@@ -1,27 +1,52 @@
-# InfDatePicker
+# Influans Date Range Picker for Angular
+it's a fork of [date-range-picker](https://github.com/DanielYKPan/date-range-picker)
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.7.1.
+## Description
+Simple Angular date range picker.
+This picker is responsive design, so feel free to try it in your desktops, tablets and mobile devices. 
+This picker uses javascript library [date-fns](https://date-fns.org/)
 
-## Development server
+## Installation
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+To install this component, follow the procedure:
 
-## Code scaffolding
+1. __Install with [npm](https://www.npmjs.com):`npm install inf-date-range-picker --save`__
+2. Add __DateRangePickerModule__ import to your __@NgModule__ like example below
+    ```js
+    import { NgModule } from '@angular/core';
+    import { BrowserModule } from '@angular/platform-browser';
+    import { MyTestApp } from './my-test-app';
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+    import { DateRangePickerModule } from 'ng-pick-daterange';
 
-## Build
+    @NgModule({
+        imports:      [ BrowserModule, DateRangePickerModule ],
+        declarations: [ MyTestApp ],
+        bootstrap:    [ MyTestApp ]
+    })
+    export class MyTestAppModule {}
+    ```    
+## Usage
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `-prod` flag for a production build.
+Use the following snippet inside your template. For example:
 
-## Running unit tests
+```html
+<inf-date-range [(dateRange)]="dateRange"></inf-date-range>
+```
+<p>Or:</p>
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+```html
+<inf-date-range [dateRange]="dateRange" (dateRangeChange)="setReturnValue($event)"></inf-date-range>
+```
+```typescript
+public setReturnValue(dateRange: IDateRange): any {
+    this.dateRange = dateRange;
+    // Do whatever you want to the return object 'dateRange'
+}
+```
 
-## Running end-to-end tests
+## License
+* License: MIT
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+## Author
+* Author: Influans
