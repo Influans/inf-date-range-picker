@@ -1,0 +1,22 @@
+{
+  "name": "inf-date-range-picker",
+  "version": "0.0.1",
+  "author": "Antoine Zazzera <antoine.zazzera@influans.com>",
+  "license": "MIT",
+  "peerDependencies": {
+    "@angular/core": ">=5.0.0",
+    "@angular/common": ">=5.0.0",
+    "date-fns": ">=1.28.0"
+  },
+  "devDependencies": {
+    "ng-packagr": "^3.0.3",
+    "date-fns": "^1.28.1"
+  },
+  "ngPackage": {
+    "$schema": "./node_modules/ng-packagr/ng-package.schema.json",
+    "lib": {
+      "entryFile": "public_api.ts"
+    },
+    "dest": "dist"
+  }
+}
