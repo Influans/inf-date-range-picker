@@ -1,5 +1,6 @@
+import { IDateRange } from '@influans/inf-date-range-picker';
 import { Component, OnInit } from '@angular/core';
-import { IDateRange } from 'inf-date-range-picker';
+
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html'

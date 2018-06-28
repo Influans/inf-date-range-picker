@@ -4,7 +4,7 @@
 
 import {
   Component, ElementRef, EventEmitter, HostListener, Input, OnInit,
-  Output, OnChanges, SimpleChanges, DoCheck, KeyValueDiffers
+  Output, OnChanges, SimpleChanges, DoCheck, KeyValueDiffers, ChangeDetectionStrategy
 } from '@angular/core';
 import * as dateFns from 'date-fns';
 
@@ -17,6 +17,7 @@ export interface IDateRange {
   selector: 'inf-date-range',
   templateUrl: './date-range-picker.component.html',
   styleUrls: ['./date-range-picker.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DateRangePickerComponent implements OnInit, OnChanges, DoCheck {
 
@@ -27,12 +28,14 @@ export class DateRangePickerComponent implements OnInit, OnChanges, DoCheck {
   public dayNames: string[];
   public dates: Date[];
   @Input() public themeColor: 'green' | 'teal' | 'grape' | 'red' | 'gray';
-  @Input() private dateRange: IDateRange;
+
+  @Input() dateRange: IDateRange;
+
   @Output() private dateRangeChange = new EventEmitter<IDateRange>();
 
   private diffDateRange: any;
 
-  constructor( private elementRef: ElementRef,
+  constructor(private elementRef: ElementRef,
                private differs: KeyValueDiffers) { }
 
   public ngOnInit() {
@@ -155,25 +158,25 @@ export class DateRangePickerComponent implements OnInit, OnChanges, DoCheck {
 
     if (this.opened === 'from') {
       this.datePick.from = date;
+
       if (this.datePick && this.datePick.to &&
         dateFns.compareDesc(date, this.datePick.to) < 1) {
         this.datePick.to = null;
-        this.dateRangeChange.emit(null);
-      } else {
-        this.dateRangeChange.emit(Object.assign({}, this.datePick));
       }
-    }
 
-    if (this.opened === 'to') {
+      this.toggleCalendar('to');
+    } else if (this.opened === 'to') {
       this.datePick.to = date;
+
       if (this.datePick && this.datePick.from &&
         dateFns.compareAsc(date, this.datePick.from) < 1) {
         this.datePick.from = null;
-        this.dateRangeChange.emit(null);
-      } else {
-        this.dateRangeChange.emit(Object.assign({}, this.datePick));
       }
+
+      this.toggleCalendar('from');
     }
+
+    this.dateRangeChange.emit(Object.assign({}, this.datePick));
 
     /*let diffMonths = dateFns.differenceInCalendarMonths(date, this.moment);
 
@@ -211,10 +214,10 @@ export class DateRangePickerComponent implements OnInit, OnChanges, DoCheck {
       this.dateRange.from &&
       this.dateRange.to) {
       this.datePick = Object.assign({}, this.datePick, this.dateRange);
+      this.datePick.from.setHours(0, 0, 0, 0);
+      this.datePick.to.setHours(23, 59, 59, 99);
       this.moment = new Date(this.datePick.from);
       this.generateCalendar();
-    } else {
-      this.selectRange('tw');
     }
   }
 }

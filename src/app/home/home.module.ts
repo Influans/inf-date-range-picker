@@ -1,8 +1,9 @@
-import { NgModule } from '@angular/core';
+import {DateRangePickerModule} from '@influans/inf-date-range-picker';
 import { CommonModule } from '@angular/common';
-import {DateRangePickerModule} from 'inf-date-range-picker';
+import { NgModule } from '@angular/core';
 
 import {HomeComponent} from './home.component';
+
 import {HomeRoutingModule} from './home-routing.module';
 
 @NgModule({

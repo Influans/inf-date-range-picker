@@ -22,8 +22,8 @@
     "@angular/platform-browser": "^5.2.0",
     "@angular/platform-browser-dynamic": "^5.2.0",
     "@angular/router": "^5.2.0",
+    "@influans/inf-date-range-picker": "file:lib/dist",
     "core-js": "^2.4.1",
-    "inf-date-range-picker": "file:lib/dist",
     "rxjs": "^5.5.6",
     "zone.js": "^0.8.19"
   },
