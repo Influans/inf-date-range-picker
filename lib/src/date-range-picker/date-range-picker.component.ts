@@ -4,7 +4,7 @@
 
 import {
   Component, ElementRef, EventEmitter, HostListener, Input, OnInit,
-  Output, OnChanges, SimpleChanges, DoCheck, KeyValueDiffers, ChangeDetectionStrategy
+  Output, OnChanges, SimpleChanges, DoCheck, KeyValueDiffers
 } from '@angular/core';
 import * as dateFns from 'date-fns';
 
@@ -16,8 +16,7 @@ export interface IDateRange {
 @Component({
   selector: 'inf-date-range',
   templateUrl: './date-range-picker.component.html',
-  styleUrls: ['./date-range-picker.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrls: ['./date-range-picker.component.scss']
 })
 export class DateRangePickerComponent implements OnInit, OnChanges, DoCheck {
 
