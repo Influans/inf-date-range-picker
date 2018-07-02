@@ -70,27 +70,36 @@
         </div>
       </div>
     </div>
+
     <div class="yk-calendar-sidebar">
       <div class="yk-sidebar-btns">
-        <button type="button" class="yk-btn" (click)="selectRange('tm')" [class.is-active]="range === 'tm'">This
-          Month
+        <button type="button"
+                class="yk-btn"
+                (click)="selectThisWeek()"
+                [class.is-active]="isRangeSelected(rangeEnum.THIS_WEEK)">
+          This Week
         </button>
-        <button type="button" class="yk-btn" (click)="selectRange('lm')" [class.is-active]="range === 'lm'">Last
-          Month
+
+        <button type="button"
+                class="yk-btn"
+                (click)="selectNextWeek()"
+                [class.is-active]="isRangeSelected(rangeEnum.NEXT_WEEK)">
+          Next Week
         </button>
-        <button type="button" class="yk-btn" (click)="selectRange('tw')" [class.is-active]="range === 'tw'">This
-          Week
+
+        <button type="button" class="yk-btn"
+                (click)="selectThisMonth()"
+                [class.is-active]="isRangeSelected(rangeEnum.THIS_MONTH)">
+          This Month
         </button>
-        <button type="button" class="yk-btn" (click)="selectRange('lw')" [class.is-active]="range === 'lw'">Last
-          Week
-        </button>
-        <button type="button" class="yk-btn" (click)="selectRange('ty')" [class.is-active]="range === 'ty'">This
-          Year
-        </button>
-        <button type="button" class="yk-btn" (click)="selectRange('ly')" [class.is-active]="range === 'ly'">Last
-          Year
+
+        <button type="button" class="yk-btn"
+                (click)="selectNextMonth()"
+                [class.is-active]="isRangeSelected(rangeEnum.NEXT_MONTH)">
+          Next Month
         </button>
       </div>
+
       <div class="yk-sidebar-inputs">
         <div class="yk-input-section" (click)="toggleCalendar('from')"
              [ngClass]="{'is-active': opened === 'from'}">

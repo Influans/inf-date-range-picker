@@ -13,6 +13,10 @@ export interface IDateRange {
   to: Date;
 }
 
+export enum Range {
+  THIS_WEEK, NEXT_WEEK, THIS_MONTH, NEXT_MONTH
+}
+
 @Component({
   selector: 'inf-date-range',
   templateUrl: './date-range-picker.component.html',
@@ -22,10 +26,11 @@ export class DateRangePickerComponent implements OnInit, OnChanges, DoCheck {
 
   public opened: false | 'from' | 'to';
   public datePick: IDateRange;
-  public range: 'tm' | 'lm' | 'lw' | 'tw' | 'ty' | 'ly';
+  public range: Range;
   public moment: Date;
   public dayNames: string[];
   public dates: Date[];
+  public rangeEnum: any = Range;
   @Input() public themeColor: 'green' | 'teal' | 'grape' | 'red' | 'gray';
 
   @Input() dateRange: IDateRange;
@@ -35,7 +40,7 @@ export class DateRangePickerComponent implements OnInit, OnChanges, DoCheck {
   private diffDateRange: any;
 
   constructor(private elementRef: ElementRef,
-               private differs: KeyValueDiffers) { }
+              private differs: KeyValueDiffers) { }
 
   public ngOnInit() {
     this.opened = false;
@@ -90,55 +95,52 @@ export class DateRangePickerComponent implements OnInit, OnChanges, DoCheck {
     }
   }
 
-  public selectRange( range: 'tm' | 'lm' | 'lw' | 'tw' | 'ty' | 'ly' ): void {
-    let today = dateFns.startOfDay(new Date());
+  public selectThisMonth() {
+    const today = dateFns.startOfDay(new Date());
+    this.range = Range.THIS_MONTH;
 
-    switch (range) {
-      case 'tm':
-        this.datePick = {
-          from: dateFns.startOfMonth(today),
-          to: dateFns.endOfMonth(today)
-        };
-        break;
-      case 'lm':
-        today = dateFns.subMonths(today, 1);
-        this.datePick = {
-          from: dateFns.startOfMonth(today),
-          to: dateFns.endOfMonth(today)
-        };
-        break;
-      case 'lw':
-        today = dateFns.subWeeks(today, 1);
-        this.datePick = {
-          from: dateFns.startOfWeek(today),
-          to: dateFns.endOfWeek(today)
-        };
-        break;
-      default:
-      case 'tw':
-        this.datePick = {
-          from: dateFns.startOfWeek(today),
-          to: dateFns.endOfWeek(today)
-        };
-        break;
-      case 'ty':
-        this.datePick = {
-          from: dateFns.startOfYear(today),
-          to: dateFns.endOfYear(today)
-        };
-        break;
-      case 'ly':
-        today = dateFns.subYears(today, 1);
-        this.datePick = {
-          from: dateFns.startOfYear(today),
-          to: dateFns.endOfYear(today)
-        };
-        break;
-    }
+    this.datePick = {
+      from: dateFns.startOfMonth(today),
+      to: dateFns.endOfMonth(today)
+    };
 
-    this.range = range;
-    this.moment = new Date(this.datePick.from);
-    this.generateCalendar();
+    this.dispatchNewDateRange();
+  }
+
+  public selectNextMonth() {
+    const today = dateFns.addMonths(dateFns.startOfDay(new Date()), 1);
+    this.range = Range.NEXT_MONTH;
+
+    this.datePick = {
+      from: dateFns.startOfMonth(today),
+      to: dateFns.endOfMonth(today)
+    };
+
+    this.dispatchNewDateRange();
+  }
+
+  public selectThisWeek() {
+    const today = dateFns.startOfDay(new Date());
+    this.range = Range.THIS_WEEK;
+
+    this.datePick = {
+      from: dateFns.startOfWeek(today),
+      to: dateFns.endOfWeek(today)
+    };
+
+    this.dispatchNewDateRange();
+  }
+
+  public selectNextWeek() {
+    const today = dateFns.addWeeks(dateFns.startOfDay(new Date()), 1);
+    this.range = Range.NEXT_WEEK;
+
+    this.datePick = {
+      from: dateFns.startOfWeek(today),
+      to: dateFns.endOfWeek(today)
+    };
+
+    this.dispatchNewDateRange();
   }
 
   public generateCalendar(): void {
@@ -154,35 +156,24 @@ export class DateRangePickerComponent implements OnInit, OnChanges, DoCheck {
   }
 
   public selectDate( date: Date ): void {
+    this.range = null;
 
     if (this.opened === 'from') {
       this.datePick.from = date;
-
-      if (this.datePick && this.datePick.to &&
-        dateFns.compareDesc(date, this.datePick.to) < 1) {
-        this.datePick.to = null;
-      }
-
+      this.datePick.to = null;
       this.toggleCalendar('to');
     } else if (this.opened === 'to') {
-      this.datePick.to = date;
-
       if (this.datePick && this.datePick.from &&
-        dateFns.compareAsc(date, this.datePick.from) < 1) {
-        this.datePick.from = null;
+        dateFns.compareAsc(date, this.datePick.from) < 0) {
+        this.datePick.from = date;
+        this.datePick.to = null;
+      } else {
+        this.datePick.to = date;
+        this.toggleCalendar('from');
       }
-
-      this.toggleCalendar('from');
     }
 
-    this.dateRangeChange.emit(Object.assign({}, this.datePick));
-
-    /*let diffMonths = dateFns.differenceInCalendarMonths(date, this.moment);
-
-    if (diffMonths !== 0) {
-        this.moment = dateFns.addMonths(this.moment, diffMonths);
-        this.generateCalendar();
-    }*/
+    this.dispatchNewDateRange();
   }
 
   public prevMonth(): void {
@@ -208,6 +199,10 @@ export class DateRangePickerComponent implements OnInit, OnChanges, DoCheck {
     return dateFns.isSameDay(day, this.datePick.to);
   }
 
+  public isRangeSelected(range: Range) {
+    return this.range === range;
+  }
+
   private initCalendar() {
     if (this.dateRange &&
       this.dateRange.from &&
@@ -218,5 +213,9 @@ export class DateRangePickerComponent implements OnInit, OnChanges, DoCheck {
       this.moment = new Date(this.datePick.from);
       this.generateCalendar();
     }
+  }
+
+  private dispatchNewDateRange() {
+    this.dateRangeChange.emit(Object.assign({}, this.datePick));
   }
 }
