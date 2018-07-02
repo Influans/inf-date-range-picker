@@ -84,6 +84,7 @@ export class DateRangePickerComponent implements OnInit, OnChanges, DoCheck {
     } else {
       this.opened = this.opened ? false : selection;
     }
+
     if (selection && this.datePick[selection]) {
       const diffMonths = dateFns.differenceInCalendarMonths(
         this.datePick[selection], this.moment);
@@ -100,7 +101,7 @@ export class DateRangePickerComponent implements OnInit, OnChanges, DoCheck {
     this.range = Range.THIS_MONTH;
 
     this.datePick = {
-      from: dateFns.startOfMonth(today),
+      from: today,
       to: dateFns.endOfMonth(today)
     };
 
@@ -124,7 +125,7 @@ export class DateRangePickerComponent implements OnInit, OnChanges, DoCheck {
     this.range = Range.THIS_WEEK;
 
     this.datePick = {
-      from: dateFns.startOfWeek(today),
+      from: today,
       to: dateFns.endOfWeek(today)
     };
 
@@ -208,8 +209,8 @@ export class DateRangePickerComponent implements OnInit, OnChanges, DoCheck {
       this.dateRange.from &&
       this.dateRange.to) {
       this.datePick = Object.assign({}, this.datePick, this.dateRange);
-      this.datePick.from.setHours(0, 0, 0, 0);
-      this.datePick.to.setHours(23, 59, 59, 99);
+      this.datePick.from = dateFns.startOfDay(this.datePick.from);
+      this.datePick.to = dateFns.endOfDay(this.datePick.to);
       this.moment = new Date(this.datePick.from);
       this.generateCalendar();
     }
