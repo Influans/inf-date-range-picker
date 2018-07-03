@@ -1,4 +1,3 @@
-#!/usr/bin/env bash
 git checkout -b release/v0.2.1 develop
 git commit -a -m "Bumped version number to 0.2.1"
 git checkout master
