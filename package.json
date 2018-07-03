@@ -1,6 +1,6 @@
 {
   "name": "inf-date-picker",
-  "version": "0.0.0",
+  "version": "0.2.1",
   "license": "MIT",
   "scripts": {
     "ng": "ng",
