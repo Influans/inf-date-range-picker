@@ -1,0 +1,30 @@
+{
+  "name": "@influans/inf-date-range-picker",
+  "version": "1.0.0",
+  "author": "Antoine Zazzera <antoine.zazzera@influans.com>",
+  "license": "MIT",
+  "keywords": [
+    "date range picker",
+    "angular date picker",
+    "influans date picker",
+    "angular date range"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Influans/inf-date-range-picker.git"
+  },
+  "peerDependencies": {
+    "@angular/core": ">=7.0.0",
+    "@angular/common": ">=7.0.0",
+    "date-fns": ">=1.28.0"
+  },
+  "devDependencies": {
+    "date-fns": "^1.28.1",
+    "hoek": "^5.0.4"
+  },
+  "description": "it's a fork of [date-range-picker](https://github.com/DanielYKPan/date-range-picker)",
+  "bugs": {
+    "url": "https://github.com/Influans/inf-date-range-picker/issues"
+  },
+  "homepage": "https://github.com/Influans/inf-date-range-picker#readme"
+}
