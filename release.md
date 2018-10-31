@@ -11,3 +11,10 @@ git checkout develop
 git merge --no-ff release/v{tag-version}
 git branch -d release/v{tag-version}
 ```
+
+don't forget to publish lib in npm after
+```
+npm run build:lib
+cd dist/inf-date-range-picker
+npm publish
+```
