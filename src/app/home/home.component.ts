@@ -2,7 +2,7 @@ import { IDateRange } from '@influans/inf-date-range-picker';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-home',
+  selector: 'idpd-home',
   templateUrl: './home.component.html'
 })
 export class HomeComponent implements OnInit {
@@ -15,21 +15,9 @@ export class HomeComponent implements OnInit {
     defaultEndDate.setDate(defaultEndDate.getDate() + 1);
 
     this.dateRange = {
-      from: new Date(),
-      to: defaultEndDate
+      from: null,
+      to: null
     };
-
-    setTimeout(() => {
-      console.log('setTimeout');
-      const fromDate = new Date();
-      const endDate = new Date();
-
-      fromDate.setDate(fromDate.getDate() + 5);
-      endDate.setDate(endDate.getDate() + 10);
-
-      this.dateRange.from = fromDate;
-      this.dateRange.to = endDate;
-    }, 500);
   }
 
   changeDate() {
