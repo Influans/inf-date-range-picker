@@ -63,7 +63,7 @@
 						  'is-within-range': isWithinRange(date),
 						  'is-from': isDateRangeFrom(date),
 						  'is-to': isDateRangeTo(date)
-						  }" (click)="selectDate(date)">
+						  }" (click)="selectDate($event, date)">
                         <span class="yk-day-num"
                               [ngClass]="{'is-active': isDateRangeFrom(date) || isDateRangeTo(date)}">{{ date | date: 'd' }}</span>
           </div>

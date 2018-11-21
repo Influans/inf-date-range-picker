@@ -1,5 +1,5 @@
-import { IDateRange } from '@influans/inf-date-range-picker';
-import { Component, OnInit } from '@angular/core';
+import { IDateRange, DayClickedEvent } from '@influans/inf-date-range-picker';
+import { Component, HostListener, OnInit } from '@angular/core';
 
 @Component({
   selector: 'idpd-home',
@@ -24,4 +24,14 @@ export class HomeComponent implements OnInit {
     console.log('changeDate');
   }
 
+  onDayCLicked(dayClickedEvent: DayClickedEvent) {
+    dayClickedEvent.event.stopPropagation();
+
+    console.log('onDayCLicked');
+  }
+
+  @HostListener('window:click', ['$event'])
+  onClicked($event) {
+    console.log('click window');
+  }
 }
