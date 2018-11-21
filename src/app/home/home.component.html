@@ -1,3 +1,6 @@
 <p>
-  <inf-date-range class="fl-date-range" [(dateRange)]="dateRange" (dateRangeChange)="changeDate()"></inf-date-range>
+  <inf-date-range class="fl-date-range"
+                  [(dateRange)]="dateRange"
+                  (dateRangeChange)="changeDate()"
+                  (onDayClicked)="onDayCLicked($event)"></inf-date-range>
 </p>

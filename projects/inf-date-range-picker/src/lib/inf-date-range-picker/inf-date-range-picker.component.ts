@@ -13,6 +13,11 @@ export interface IDateRange {
   to: Date;
 }
 
+export interface DayClickedEvent {
+  event: any;
+  date: Date;
+}
+
 export enum Range {
   THIS_WEEK, NEXT_WEEK, THIS_MONTH, NEXT_MONTH
 }
@@ -36,6 +41,7 @@ export class InfDateRangePickerComponent implements OnInit, OnChanges, DoCheck {
   @Input() dateRange: IDateRange;
 
   @Output() private dateRangeChange = new EventEmitter<IDateRange>();
+  @Output() private onDayClicked = new EventEmitter<DayClickedEvent>();
 
   private diffDateRange: any;
 
@@ -156,7 +162,9 @@ export class InfDateRangePickerComponent implements OnInit, OnChanges, DoCheck {
     }
   }
 
-  public selectDate( date: Date ): void {
+  public selectDate(event: any, date: Date): void {
+    this.onDayClicked.emit({ event, date });
+
     this.range = null;
 
     if (this.opened === 'from') {
